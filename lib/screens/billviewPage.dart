@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:van_bill_generation/apicalls/api.dart';
 
-import '../blu.dart';
+import 'bluetoothScreen.dart';
 
 class BillViewPage extends StatefulWidget {
   List<dynamic> billproducts = [];

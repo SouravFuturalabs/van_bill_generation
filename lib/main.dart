@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:van_bill_generation/screens/signUpscreen.dart';
-import 'blu.dart';
+import 'screens/bluetoothScreen.dart';
 import 'package:van_bill_generation/home_screen.dart';
 import 'package:van_bill_generation/widgets/bottomNavigation.dart';
 import 'package:van_bill_generation/screens/loginScreen.dart';
