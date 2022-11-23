@@ -3,11 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:van_bill_generation/screens/signUpscreen.dart';
 import 'screens/bluetoothScreen.dart';
-import 'package:van_bill_generation/home_screen.dart';
+import 'package:van_bill_generation/tested/home_screen.dart';
 import 'package:van_bill_generation/widgets/bottomNavigation.dart';
 import 'package:van_bill_generation/screens/loginScreen.dart';
 
-import 'homepage2.dart';
+import 'tested/homepage2.dart';
 
 void main()async {
   WidgetsFlutterBinding.ensureInitialized();

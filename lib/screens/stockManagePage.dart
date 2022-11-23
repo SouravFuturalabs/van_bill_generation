@@ -93,6 +93,8 @@ class _StockManagePageState extends State<StockManagePage> {
                         itemCount: snapshot.data.length,
                         itemBuilder: (context, index) {
                           var stocks = snapshot.data[index];
+                          var quntity = stocks["Quantity"].toString();
+                          int qty = int.parse(quntity);
                           return Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
@@ -136,10 +138,13 @@ class _StockManagePageState extends State<StockManagePage> {
                                           fontWeight: FontWeight.w400,
                                           fontSize: 15),
                                     ),
-                                    trailing: Text("qty:${stocks["Quantity"]}",
+                                    trailing:qty <= 0? Text("Out of Stock",
                                         style: TextStyle(
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 15)),
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.red,
+                                            fontSize: 13)):Text("qty:${stocks["Quantity"]}",style: TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 15)),
                                   ),
                                 ),
                               ),

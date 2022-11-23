@@ -444,7 +444,7 @@ class _BillingScreenState extends State<BillingScreen> {
                                 child: Container(
                                   width: 45,
                                   child: Text(
-                                    qtyController.text,
+                                    addedPrdocts[index]["qty"].toString(),
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(

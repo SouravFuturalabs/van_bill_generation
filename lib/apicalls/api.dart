@@ -8,7 +8,7 @@ import '../widgets/bottomNavigation.dart';
 
 class Apis {
 
-  static final ip ="192.168.68.171";
+  static final ip ="192.168.29.86";
 
 
   /// ------------- login api
@@ -67,6 +67,7 @@ class Apis {
     final url = "http://${ip}/MobileBillingAppGit/API/stock_view.php";
     SharedPreferences preferences = await SharedPreferences.getInstance();
     var vanId = preferences.getString("id");
+    print(vanId);
 
     var userData = {
       "Van_id": vanId,
@@ -74,6 +75,7 @@ class Apis {
 
     var response = await post(Uri.parse(url), body: userData);
     if (response.statusCode == 200) {
+      print(response.body);
       var message = jsonDecode(response.body);
       if(message[0]["message"] != "failed"){
         return message;
@@ -100,6 +102,7 @@ class Apis {
 
     var response = await post(Uri.parse(url), body: userData);
     if (response.statusCode == 200) {
+
       var message = jsonDecode(response.body);
       print(response.body);
 
@@ -118,7 +121,7 @@ class Apis {
       "Van_id": vanId,
       "shop_id":shopId,
       "modeofpay":modeofpay,
-      "amount":amount,
+      "amount":amount.toString(),
 
     };
     print(userData);

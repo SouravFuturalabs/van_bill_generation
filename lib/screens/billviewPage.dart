@@ -25,19 +25,39 @@ class _BillViewPageState extends State<BillViewPage> {
     });
   }
 
-
-  shopstockupdate(){
-    widget.billproducts.forEach((element) {
+  shopstockupdate() async {
+    bool shopupdateapi = false;
+    int count = 0;
+    widget.billproducts.forEach((element) async {
       var qty = double.parse(element["qty"].toString());
       var p_id = double.parse(element["id"].toString());
       var shopId = double.parse(element["shop_id"].toString());
 
-      var data = Apis.shopUpdate(shopId.toString(), p_id.toString(), qty.toString(), DateTime.now().toString());
+      var data = await Apis.shopUpdate(shopId.toString(), p_id.toString(),
+          qty.toString(), DateTime.now().toString());
+      print("data iss ${data}");
+      print(data["message"].toString());
 
+      if (data["message"].toString() == "sucess") {
+        count = count + 1;
+        nextpage(count);
+      }
     });
-
   }
 
+  nextpage(int count) {
+    var l = widget.billproducts.length;
+    print("count from list ${l}");
+    print("function called in sucessfull way ${count}");
+
+    if (l == count) {
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => PoSSS(
+                fullbill: widget.billproducts,
+                amount: grandTotal.toString(),
+              )));
+    }
+  }
 
   @override
   void initState() {
@@ -54,10 +74,8 @@ class _BillViewPageState extends State<BillViewPage> {
         padding: const EdgeInsets.only(bottom: 50),
         child: FloatingActionButton.extended(
           label: Text("print"),
-          onPressed: () {
+          onPressed: () async {
             shopstockupdate();
-            Navigator.of(context).push(MaterialPageRoute(builder: (context)=>PoSSS(fullbill: widget.billproducts,amount: grandTotal.toString(),)));
-
           },
         ),
       ),
