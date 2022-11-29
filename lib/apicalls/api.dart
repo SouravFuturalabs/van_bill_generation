@@ -8,7 +8,7 @@ import '../widgets/bottomNavigation.dart';
 
 class Apis {
 
-  static final ip ="192.168.29.86";
+  static final ip ="192.168.29.87";
 
 
   /// ------------- login api
