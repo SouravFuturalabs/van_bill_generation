@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: id.isEmpty ? LoginPage():id == "null" ?LoginPage():BottomNavigationBarPage(),
+      home: id.isEmpty ? LoginPage():id == "null" ?LoginPage():BottomNavigationBarPage(0),
     );
   }
 }

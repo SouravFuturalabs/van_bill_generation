@@ -8,13 +8,16 @@ import 'package:van_bill_generation/screens/stockManagePage.dart';
 import '../screens/billingScreen.dart';
 
 class BottomNavigationBarPage extends StatefulWidget {
+  int ? currentIndex;
+  BottomNavigationBarPage(this.currentIndex);
+  
   @override
   _BottomNavigationBarPageState createState() =>
       _BottomNavigationBarPageState();
 }
 
 class _BottomNavigationBarPageState extends State<BottomNavigationBarPage> {
-  int _selectedIndex = 0;
+  int _selectedIndex =  0;
   PageController? _pageController;
 
   List<Widget> _widgetOptions = <Widget>[
@@ -24,6 +27,13 @@ class _BottomNavigationBarPageState extends State<BottomNavigationBarPage> {
     ShopDetailsPage(),
     // ProfilePage(),
   ];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _selectedIndex = widget.currentIndex ?? 0;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

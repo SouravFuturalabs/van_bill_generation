@@ -183,7 +183,7 @@ class _LoginPageState extends State<LoginPage> {
                             Navigator.of(context).pushAndRemoveUntil(
                               // the new route
                               MaterialPageRoute(
-                                builder: (BuildContext context) => BottomNavigationBarPage(),
+                                builder: (BuildContext context) => BottomNavigationBarPage(0),
                               ),
 
                                   (Route route) => false,

@@ -8,12 +8,13 @@ import '../widgets/bottomNavigation.dart';
 
 class Apis {
 
-  static final ip ="192.168.29.87";
+  static final ip ="192.168.68.132";
+  static final api ="MobileBillAppgit/API/";
 
 
   /// ------------- login api
   Future<dynamic> loginApicall(String userName, String password) async {
-    final url = "http://${ip}/MobileBillingAppGit/API/login.php";
+    final url = "http://${ip}/${api}login.php";
 
     var userData = {"user_name": userName, "password": password};
 
@@ -29,7 +30,7 @@ class Apis {
   /// ------------- login api
   Future<dynamic> signUpApicall(String van_number, String driver_name,
       String driver_phone, String email) async {
-    final url = "http://${ip}/MobileBillingAppGit/API/vehicle_reg.php";
+    final url = "http://${ip}/${api}vehicle_reg.php";
 
     var userData = {
       "Van_num": van_number,
@@ -50,7 +51,7 @@ class Apis {
 
   ///------------- shop details
  static Future<dynamic> getShopDetails() async {
-    final url = "http://${ip}/MobileBillingAppGit/API/view_shoplist.php";
+    final url = "http://${ip}/${api}view_shoplist.php";
 
     var response = await get(Uri.parse(url),);
     if (response.statusCode == 200) {
@@ -64,7 +65,7 @@ class Apis {
 ///------------------------------- for van stockes
  static Future<dynamic> getStockes() async {
     print("sdfdrsf");
-    final url = "http://${ip}/MobileBillingAppGit/API/stock_view.php";
+    final url = "http://${ip}/${api}stock_view.php";
     SharedPreferences preferences = await SharedPreferences.getInstance();
     var vanId = preferences.getString("id");
     print(vanId);
@@ -77,6 +78,7 @@ class Apis {
     if (response.statusCode == 200) {
       print(response.body);
       var message = jsonDecode(response.body);
+      print(response.body);
       if(message[0]["message"] != "failed"){
         return message;
       }
@@ -88,7 +90,7 @@ class Apis {
 
   static Future<dynamic> shopUpdate(String shopId,p_id,qty,date) async {
     print("sdfdrsf");
-    final url = "http://${ip}/MobileBillingAppGit/API/shop_stock.php";
+    final url = "http://${ip}/${api}shop_stock.php";
     SharedPreferences preferences = await SharedPreferences.getInstance();
     var vanId = preferences.getString("id");
 
@@ -113,7 +115,7 @@ class Apis {
   ///--------- b ill
   static Future<dynamic> billupdate(String shopId,modeofpay,double amount) async {
     print("sdfdrsf");
-    final url = "http://${ip}/MobileBillingAppGit/API/bill.php";
+    final url = "http://${ip}/${api}bill.php";
     SharedPreferences preferences = await SharedPreferences.getInstance();
     var vanId = preferences.getString("id");
 

@@ -1,107 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:van_bill_generation/apicalls/api.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/placeholder.dart';
 
 import '../widgets/bottomNavigation.dart';
-import 'bluetoothScreen.dart';
-import 'finalbillview.dart';
 
-class BillViewPage extends StatefulWidget {
+class FianlBillView extends StatefulWidget {
   List<dynamic> billproducts = [];
-  BillViewPage({Key? key, required this.billproducts}) : super(key: key);
+  var grandTotal;
+  FianlBillView(
+      {super.key, required this.billproducts, required this.grandTotal});
 
   @override
-  State<BillViewPage> createState() => _BillViewPageState();
+  State<FianlBillView> createState() => _FianlBillViewState();
 }
 
-class _BillViewPageState extends State<BillViewPage> {
-  var grandTotal = 0.0;
-
-  grandTotalfunction() {
-    widget.billproducts.forEach((element) {
-      var qtyforadd = double.parse(element["qty"].toString());
-      var singleprice = double.parse(element["price"].toString());
-      var singleTotal = qtyforadd * singleprice;
-      setState(() {
-        grandTotal = singleTotal + grandTotal;
-      });
-    });
-  }
-
-  shopstockupdate() async {
-    bool shopupdateapi = false;
-    int count = 0;
-    print(widget.billproducts);
-    widget.billproducts.forEach((element) async {
-      
-      var qty = double.parse(element["qty"].toString());
-      var p_id = double.parse(element["id"].toString());
-      var shopId = double.parse(element["shop_id"].toString());
-
-      var data = await Apis.shopUpdate(shopId.toString(), p_id.toString(),
-          qty.toString(), DateTime.now().toString());
-      print("data iss ${data}");
-      print(data["message"].toString());
-
-      if (data["message"].toString() == "sucess") {
-        count = count + 1;
-        nextpage(count);
-      }
-    });
-  }
-
-  nextpage(int count) {
-    var l = widget.billproducts.length;
-    print("count from list ${l}");
-    print("function called in sucessfull way ${count}");
-
-    if (l == count) {
-       Navigator.of(context).pushAndRemoveUntil(
-                  // the new route
-                  MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                        BottomNavigationBarPage(1),
-                  ),
-
-                  (Route route) => false,
-                );
-      Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => FianlBillView(
-                billproducts: widget.billproducts,
-                grandTotal: grandTotal.toString(),
-              )));
-      
-
-
-      // Navigator.of(context).push(MaterialPageRoute(
-      //     builder: (context) => PoSSS(
-      //           fullbill: widget.billproducts,
-      //           amount: grandTotal.toString(),
-      //         )));
-    }
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    grandTotalfunction();
-  }
-
+class _FianlBillViewState extends State<FianlBillView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade300,
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 50),
-        child: FloatingActionButton.extended(
-          label: Text("print"),
-          onPressed: () async {
-            shopstockupdate();
-          },
-        ),
-      ),
       appBar: AppBar(
-        title: Text("Bill View"),
+        title: Text("Final Bill View"),
         elevation: 0.0,
         centerTitle: true,
       ),
@@ -228,36 +146,80 @@ class _BillViewPageState extends State<BillViewPage> {
                           );
                         }),
                   ),
-                  Container(
-                    height: 60,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: [BoxShadow(color: Colors.grey)]),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text("Grand Total",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500)),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(grandTotal.toString(),
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500)),
-                        ),
-                      ],
-                    ),
-                  )
                 ],
               ),
             ),
+          ),
+          Container(
+            height: 60,
+            decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [BoxShadow(color: Colors.grey)]),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("Grand Total",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500)),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(widget.grandTotal.toString(),
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500)),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: InkWell(
+              onTap: () {
+                Navigator.of(context).pushAndRemoveUntil(
+                  // the new route
+                  MaterialPageRoute(
+                    builder: (BuildContext context) =>
+                        BottomNavigationBarPage(0),
+                  ),
+
+                  (Route route) => false,
+                );
+              },
+              child: Container(
+                height: 40,
+                width: 120,
+                decoration: BoxDecoration(
+                    color: Color.fromRGBO(53, 133, 228, 1),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey,
+                        offset: Offset(4, 4),
+                        spreadRadius: 1,
+                        blurRadius: 2,
+                      )
+                    ],
+                    borderRadius: BorderRadius.all(Radius.circular(20))),
+                child: Center(
+                  child: Text(
+                    "Continue",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 10,
           )
         ],
       ),
